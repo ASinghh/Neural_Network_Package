@@ -12,6 +12,10 @@ from sklearn import decomposition as skd
 import matplotlib.pyplot as plt
 from sklearn import preprocessing
 
+
+## this code imports MNIST Dataset
+## Does PCA and selects 1st 255 columns , adds intercept
+## converts labels to on hot encoded vectors
 def datapre():
     data = pd.read_csv("mnist_train.csv")
     data.head(5)

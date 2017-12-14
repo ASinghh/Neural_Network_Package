@@ -6,35 +6,35 @@ import matplotlib.pyplot as plt
 from sklearn import preprocessing
 from sklearn.preprocessing import normalize
 
-def loss(y,w, loss = 0):
+def loss(y,w, loss = 0): ## cross entropy loss
     for i in range(len(y)):
         loss -= np.sum(np.nan_to_num(np.log(w[i,np.nonzero(y[i])[0][0]] + 0.000000000001)))/len(y)
         
     return loss
-def sigmoid_prime(z):
+def sigmoid_prime(z): ## Derivative of Sigmoid Function
     return sigmoid(z)*(1-sigmoid(z))
 
-def sigmoid(z):
+def sigmoid(z): ## Activation
     return 1.0/(1.0+np.exp(-z))
 
-def delta_C(y,w):
+def delta_C(y,w): ## rate of change of cost with respect to prob
     A= y/(w+0.1)
     B= (1-y)/(1-(w+.01))
     return (A-B)
 
-def relu_def(x):
+def relu_def(x): ## relu activation differentiation
     if x >= 0:
         de = x
     else :
         de = x
     return de
 
-relu_prime = np.vectorize(relu_def)
+relu_prime = np.vectorize(relu_def) ## applying vector wise
 
 def relu(x):
     return np.maximum(x,0)
 
-def activation_sigmoid(p):
+def activation_sigmoid(p): ## probability for output logits
     li = []
     for i in p:
         z = np.exp(i)
@@ -46,7 +46,7 @@ def activation_sigmoid(p):
 
 
 
-def feed(X,Y,batch_size,cursor = 0):
+def feed(X,Y,batch_size,cursor = 0):## feeds batches of desired size
     
     while len(X)%batch_size == 0:
         ##to make sure perfect allocation of data
@@ -111,8 +111,8 @@ def Neural_network(X,y,weight,bias,step_size, activation):
             bias[i] = bias[i] + step_size*db[i]
 
     if activation == 0:
-        z_list =[]
-        a_list =[]
+        z_list =[] ## logits
+        a_list =[] ## activation
         for i in range(len(weight)):
             if i == len(weight) - 1:
                 z_list.append(np.matmul(a_list[i-1],weight[i]) +bias[i])
@@ -125,9 +125,9 @@ def Neural_network(X,y,weight,bias,step_size, activation):
                 a_list.append(sigmoid(z_list[i]))
         los = loss(y,a_list[-1], loss = 0)
         print(los)
-        dz = []
-        dw = []
-        db = []
+        dz = [] ## rate of change of logits 
+        dw = [] ## gradient of weights
+        db = [] ## gradient of Biases
         for i in range(len(weight)):
             if i == 0:
                 dz.append(np.multiply(delta_C(y,a_list[-1]) ,  sigmoid_prime(z_list[-1])))
