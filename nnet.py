@@ -24,9 +24,9 @@ def delta_C(y,w): ## rate of change of cost with respect to prob
 
 def relu_def(x): ## relu activation differentiation
     if x >= 0:
-        de = x
+        de = 1
     else :
-        de = x
+        de = 0
     return de
 
 relu_prime = np.vectorize(relu_def) ## applying vector wise
